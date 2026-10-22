@@ -36,7 +36,10 @@ export function parsePayload(json: string): PmtPayloadV1 {
       originalCsvText: raw.originalCsvText ?? null,
       requiredInputs: (() => {
         const base = defaultRequiredInputs();
-        const rawRi = raw.requiredInputs ?? {};
+        const rawRi = (raw.requiredInputs ?? {}) as Partial<
+          ReturnType<typeof defaultRequiredInputs>
+        > &
+          Record<string, unknown>;
         return {
           ...base,
           ...rawRi,
