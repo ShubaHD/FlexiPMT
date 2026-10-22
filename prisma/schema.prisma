@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  /// Conexiune directă (Supabase: Session mode / port 5432) — pentru migrate
+  directUrl = env("DIRECT_URL")
+}
+
+model LabSettings {
+  id            String   @id @default("default")
+  companyName   String   @default("")
+  address       String   @default("")
+  phone         String?
+  email         String?
+  accreditation String?
+  /// Logo firmă (data URL) — antet raport
+  logoDataUrl   String?  @db.Text
+  /// Întocmit — nume pe raport
+  preparedBy    String?
+  /// Verificat — nume pe raport
+  verifiedBy    String?
+  updatedAt     DateTime @updatedAt
+}
+
+model Project {
+  id        String     @id @default(cuid())
+  code      String     @unique
+  name      String
+  site      String?
+  client    String?
+  notes     String?    @db.Text
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  boreholes Borehole[]
+}
+
+model Borehole {
+  id        String    @id @default(cuid())
+  projectId String
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  code      String
+  notes     String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  tests     PmtTest[]
+
+  @@unique([projectId, code])
+}
+
+/// Test presiometric (OYO / ISO 22476-5)
+model PmtTest {
+  id             String   @id @default(cuid())
+  boreholeId     String
+  borehole       Borehole @relation(fields: [boreholeId], references: [id], onDelete: Cascade)
+  /// Număr / etichetă test
+  label          String
+  depthM         Float?
+  /// DRAFT | IN_PROGRESS | VERIFIED | FINALIZED | IMPORTED
+  status         String   @default("DRAFT")
+  author         String?
+  testDate       String?
+  sourceFileName String?
+  /// Schema internă versionată (JSON)
+  payloadJson    String   @default("{}") @db.Text
+  historyJson    String   @default("[]") @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([boreholeId])
+}

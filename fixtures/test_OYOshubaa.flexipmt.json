@@ -1,0 +1,1154 @@
+{
+  "schemaVersion": 1,
+  "migratedAt": "2026-10-21T11:51:43.681426+00:00",
+  "source": {
+    "fileName": "test_OYOshubaa.oyo",
+    "format": "oyo-pickle-v1",
+    "absolutePath": "C:\\Users\\Shuba\\Desktop\\test_OYOshubaa.oyo"
+  },
+  "rawPoints": [
+    {
+      "index": 0,
+      "time": "00:00:00",
+      "pressureMPa": 0.107,
+      "pressureKPa": 107.0,
+      "dRiMm": -1.38,
+      "radiusMm": 36.086,
+      "volumeCm3": 0.0
+    },
+    {
+      "index": 1,
+      "time": "00:01:29",
+      "pressureMPa": 0.308,
+      "pressureKPa": 308.0,
+      "dRiMm": -1.306,
+      "radiusMm": 36.126,
+      "volumeCm3": 5.444656528824335
+    },
+    {
+      "index": 2,
+      "time": "00:01:49",
+      "pressureMPa": 0.511,
+      "pressureKPa": 511.0,
+      "dRiMm": -1.038,
+      "radiusMm": 36.274,
+      "volumeCm3": 25.642332689872156
+    },
+    {
+      "index": 3,
+      "time": "00:02:06",
+      "pressureMPa": 0.699,
+      "pressureKPa": 699.0,
+      "dRiMm": -0.679,
+      "radiusMm": 36.475,
+      "volumeCm3": 53.2051881989661
+    },
+    {
+      "index": 4,
+      "time": "00:02:22",
+      "pressureMPa": 0.834,
+      "pressureKPa": 834.0,
+      "dRiMm": -0.325,
+      "radiusMm": 36.676,
+      "volumeCm3": 80.9203518898176
+    },
+    {
+      "index": 5,
+      "time": "00:02:34",
+      "pressureMPa": 0.972,
+      "pressureKPa": 972.0,
+      "dRiMm": 0.028,
+      "radiusMm": 36.878,
+      "volumeCm3": 108.92684866212488
+    },
+    {
+      "index": 6,
+      "time": "00:02:44",
+      "pressureMPa": 1.097,
+      "pressureKPa": 1097.0,
+      "dRiMm": 0.387,
+      "radiusMm": 37.086,
+      "volumeCm3": 137.92597058908302
+    },
+    {
+      "index": 7,
+      "time": "00:02:55",
+      "pressureMPa": 1.197,
+      "pressureKPa": 1197.0,
+      "dRiMm": 0.734,
+      "radiusMm": 37.29,
+      "volumeCm3": 166.52584384197863
+    },
+    {
+      "index": 8,
+      "time": "00:03:05",
+      "pressureMPa": 1.309,
+      "pressureKPa": 1309.0,
+      "dRiMm": 1.083,
+      "radiusMm": 37.497,
+      "volumeCm3": 195.7066698331541
+    },
+    {
+      "index": 9,
+      "time": "00:03:15",
+      "pressureMPa": 1.378,
+      "pressureKPa": 1378.0,
+      "dRiMm": 1.423,
+      "radiusMm": 37.7,
+      "volumeCm3": 224.48049998278313
+    },
+    {
+      "index": 10,
+      "time": "00:03:25",
+      "pressureMPa": 1.489,
+      "pressureKPa": 1489.0,
+      "dRiMm": 1.773,
+      "radiusMm": 37.911,
+      "volumeCm3": 254.55293258851393
+    },
+    {
+      "index": 11,
+      "time": "00:03:34",
+      "pressureMPa": 1.579,
+      "pressureKPa": 1579.0,
+      "dRiMm": 2.109,
+      "radiusMm": 38.116,
+      "volumeCm3": 283.93097394347376
+    },
+    {
+      "index": 12,
+      "time": "00:03:42",
+      "pressureMPa": 1.657,
+      "pressureKPa": 1657.0,
+      "dRiMm": 2.439,
+      "radiusMm": 38.32,
+      "volumeCm3": 313.32298093441597
+    },
+    {
+      "index": 13,
+      "time": "00:03:48",
+      "pressureMPa": 1.743,
+      "pressureKPa": 1743.0,
+      "dRiMm": 2.777,
+      "radiusMm": 38.53,
+      "volumeCm3": 343.74333675839176
+    },
+    {
+      "index": 14,
+      "time": "00:03:55",
+      "pressureMPa": 1.54,
+      "pressureKPa": 1540.0,
+      "dRiMm": 2.836,
+      "radiusMm": 38.567,
+      "volumeCm3": 349.12034034605813
+    },
+    {
+      "index": 15,
+      "time": "00:03:58",
+      "pressureMPa": 1.338,
+      "pressureKPa": 1338.0,
+      "dRiMm": 2.703,
+      "radiusMm": 38.485,
+      "volumeCm3": 337.21069328655364
+    },
+    {
+      "index": 16,
+      "time": "00:04:03",
+      "pressureMPa": 1.135,
+      "pressureKPa": 1135.0,
+      "dRiMm": 2.422,
+      "radiusMm": 38.312,
+      "volumeCm3": 312.1673975989122
+    },
+    {
+      "index": 17,
+      "time": "00:04:07",
+      "pressureMPa": 0.964,
+      "pressureKPa": 964.0,
+      "dRiMm": 2.081,
+      "radiusMm": 38.102,
+      "volumeCm3": 281.9196283089546
+    },
+    {
+      "index": 18,
+      "time": "00:04:12",
+      "pressureMPa": 0.83,
+      "pressureKPa": 830.0,
+      "dRiMm": 1.748,
+      "radiusMm": 37.9,
+      "volumeCm3": 252.9810285361491
+    },
+    {
+      "index": 19,
+      "time": "00:04:21",
+      "pressureMPa": 1.034,
+      "pressureKPa": 1034.0,
+      "dRiMm": 1.732,
+      "radiusMm": 37.889,
+      "volumeCm3": 251.40958064303857
+    },
+    {
+      "index": 20,
+      "time": "00:04:29",
+      "pressureMPa": 1.238,
+      "pressureKPa": 1238.0,
+      "dRiMm": 1.973,
+      "radiusMm": 38.035,
+      "volumeCm3": 272.3041324263267
+    },
+    {
+      "index": 21,
+      "time": "00:04:38",
+      "pressureMPa": 1.428,
+      "pressureKPa": 1428.0,
+      "dRiMm": 2.305,
+      "radiusMm": 38.238,
+      "volumeCm3": 301.48968965603854
+    },
+    {
+      "index": 22,
+      "time": "00:04:48",
+      "pressureMPa": 1.59,
+      "pressureKPa": 1590.0,
+      "dRiMm": 2.65,
+      "radiusMm": 38.451,
+      "volumeCm3": 332.27998120966333
+    },
+    {
+      "index": 23,
+      "time": "00:04:56",
+      "pressureMPa": 1.746,
+      "pressureKPa": 1746.0,
+      "dRiMm": 2.991,
+      "radiusMm": 38.664,
+      "volumeCm3": 363.2413098638088
+    },
+    {
+      "index": 24,
+      "time": "00:05:04",
+      "pressureMPa": 1.85,
+      "pressureKPa": 1850.0,
+      "dRiMm": 3.332,
+      "radiusMm": 38.878,
+      "volumeCm3": 394.52024034054324
+    },
+    {
+      "index": 25,
+      "time": "00:05:13",
+      "pressureMPa": 1.931,
+      "pressureKPa": 1931.0,
+      "dRiMm": 3.672,
+      "radiusMm": 39.094,
+      "volumeCm3": 426.2665719457304
+    },
+    {
+      "index": 26,
+      "time": "00:05:20",
+      "pressureMPa": 2.013,
+      "pressureKPa": 2013.0,
+      "dRiMm": 4.007,
+      "radiusMm": 39.308,
+      "volumeCm3": 457.8924096496446
+    },
+    {
+      "index": 27,
+      "time": "00:05:28",
+      "pressureMPa": 2.075,
+      "pressureKPa": 2075.0,
+      "dRiMm": 4.322,
+      "radiusMm": 39.512,
+      "volumeCm3": 488.20113840345243
+    },
+    {
+      "index": 28,
+      "time": "00:05:36",
+      "pressureMPa": 2.131,
+      "pressureKPa": 2131.0,
+      "dRiMm": 4.651,
+      "radiusMm": 39.726,
+      "volumeCm3": 520.1642022026256
+    },
+    {
+      "index": 29,
+      "time": "00:05:40",
+      "pressureMPa": 1.914,
+      "pressureKPa": 1914.0,
+      "dRiMm": 4.677,
+      "radiusMm": 39.744,
+      "volumeCm3": 522.8605557789781
+    },
+    {
+      "index": 30,
+      "time": "00:05:43",
+      "pressureMPa": 1.714,
+      "pressureKPa": 1714.0,
+      "dRiMm": 4.587,
+      "radiusMm": 39.686,
+      "volumeCm3": 514.1766784632605
+    },
+    {
+      "index": 31,
+      "time": "00:05:47",
+      "pressureMPa": 1.507,
+      "pressureKPa": 1507.0,
+      "dRiMm": 4.36,
+      "radiusMm": 39.539,
+      "volumeCm3": 492.2243442653672
+    },
+    {
+      "index": 32,
+      "time": "00:05:52",
+      "pressureMPa": 1.319,
+      "pressureKPa": 1319.0,
+      "dRiMm": 4.044,
+      "radiusMm": 39.336,
+      "volumeCm3": 462.0431421821462
+    },
+    {
+      "index": 33,
+      "time": "00:05:57",
+      "pressureMPa": 1.168,
+      "pressureKPa": 1168.0,
+      "dRiMm": 3.719,
+      "radiusMm": 39.128,
+      "volumeCm3": 431.2797018209318
+    },
+    {
+      "index": 34,
+      "time": "00:06:03",
+      "pressureMPa": 1.379,
+      "pressureKPa": 1379.0,
+      "dRiMm": 3.706,
+      "radiusMm": 39.119,
+      "volumeCm3": 429.95227273895847
+    },
+    {
+      "index": 35,
+      "time": "00:06:11",
+      "pressureMPa": 1.597,
+      "pressureKPa": 1597.0,
+      "dRiMm": 3.936,
+      "radiusMm": 39.265,
+      "volumeCm3": 451.52382517272537
+    },
+    {
+      "index": 36,
+      "time": "00:06:20",
+      "pressureMPa": 1.799,
+      "pressureKPa": 1799.0,
+      "dRiMm": 4.219,
+      "radiusMm": 39.446,
+      "volumeCm3": 478.3782050428633
+    },
+    {
+      "index": 37,
+      "time": "00:06:29",
+      "pressureMPa": 1.973,
+      "pressureKPa": 1973.0,
+      "dRiMm": 4.538,
+      "radiusMm": 39.653,
+      "volumeCm3": 509.24151223630577
+    },
+    {
+      "index": 38,
+      "time": "00:06:37",
+      "pressureMPa": 2.119,
+      "pressureKPa": 2119.0,
+      "dRiMm": 4.853,
+      "radiusMm": 39.858,
+      "volumeCm3": 539.9658265742935
+    },
+    {
+      "index": 39,
+      "time": "00:06:46",
+      "pressureMPa": 2.199,
+      "pressureKPa": 2199.0,
+      "dRiMm": 5.168,
+      "radiusMm": 40.065,
+      "volumeCm3": 571.1506468731784
+    },
+    {
+      "index": 40,
+      "time": "00:06:55",
+      "pressureMPa": 2.261,
+      "pressureKPa": 2261.0,
+      "dRiMm": 5.485,
+      "radiusMm": 40.275,
+      "volumeCm3": 602.9524866506438
+    },
+    {
+      "index": 41,
+      "time": "00:07:04",
+      "pressureMPa": 2.302,
+      "pressureKPa": 2302.0,
+      "dRiMm": 5.792,
+      "radiusMm": 40.48,
+      "volumeCm3": 634.1575023637427
+    },
+    {
+      "index": 42,
+      "time": "00:07:13",
+      "pressureMPa": 2.328,
+      "pressureKPa": 2328.0,
+      "dRiMm": 6.09,
+      "radiusMm": 40.679,
+      "volumeCm3": 664.600743433563
+    },
+    {
+      "index": 43,
+      "time": "00:07:18",
+      "pressureMPa": 2.12,
+      "pressureKPa": 2120.0,
+      "dRiMm": 6.149,
+      "radiusMm": 40.72,
+      "volumeCm3": 670.8915169436375
+    },
+    {
+      "index": 44,
+      "time": "00:07:21",
+      "pressureMPa": 1.913,
+      "pressureKPa": 1913.0,
+      "dRiMm": 6.057,
+      "radiusMm": 40.659,
+      "volumeCm3": 661.5343730744702
+    },
+    {
+      "index": 45,
+      "time": "00:07:24",
+      "pressureMPa": 1.695,
+      "pressureKPa": 1695.0,
+      "dRiMm": 5.835,
+      "radiusMm": 40.511,
+      "volumeCm3": 638.8900999530318
+    },
+    {
+      "index": 46,
+      "time": "00:07:27",
+      "pressureMPa": 1.492,
+      "pressureKPa": 1492.0,
+      "dRiMm": 5.525,
+      "radiusMm": 40.305,
+      "volumeCm3": 607.5091782991166
+    },
+    {
+      "index": 47,
+      "time": "00:07:30",
+      "pressureMPa": 1.336,
+      "pressureKPa": 1336.0,
+      "dRiMm": 5.207,
+      "radiusMm": 40.095,
+      "volumeCm3": 575.6835880811906
+    },
+    {
+      "index": 48,
+      "time": "00:07:39",
+      "pressureMPa": 1.541,
+      "pressureKPa": 1541.0,
+      "dRiMm": 5.087,
+      "radiusMm": 40.014,
+      "volumeCm3": 563.4524335711109
+    },
+    {
+      "index": 49,
+      "time": "00:07:46",
+      "pressureMPa": 1.753,
+      "pressureKPa": 1753.0,
+      "dRiMm": 5.313,
+      "radiusMm": 40.163,
+      "volumeCm3": 585.9708161634161
+    },
+    {
+      "index": 50,
+      "time": "00:07:54",
+      "pressureMPa": 1.961,
+      "pressureKPa": 1961.0,
+      "dRiMm": 5.606,
+      "radiusMm": 40.357,
+      "volumeCm3": 615.4154812737811
+    },
+    {
+      "index": 51,
+      "time": "00:08:03",
+      "pressureMPa": 2.141,
+      "pressureKPa": 2141.0,
+      "dRiMm": 5.907,
+      "radiusMm": 40.557,
+      "volumeCm3": 645.9193406304893
+    },
+    {
+      "index": 52,
+      "time": "00:08:12",
+      "pressureMPa": 2.29,
+      "pressureKPa": 2290.0,
+      "dRiMm": 6.213,
+      "radiusMm": 40.763,
+      "volumeCm3": 677.4959659138027
+    },
+    {
+      "index": 53,
+      "time": "00:08:20",
+      "pressureMPa": 2.38,
+      "pressureKPa": 2380.0,
+      "dRiMm": 6.521,
+      "radiusMm": 40.971,
+      "volumeCm3": 709.5414776705763
+    },
+    {
+      "index": 54,
+      "time": "00:08:28",
+      "pressureMPa": 2.435,
+      "pressureKPa": 2435.0,
+      "dRiMm": 6.824,
+      "radiusMm": 41.177,
+      "volumeCm3": 741.4396160593338
+    },
+    {
+      "index": 55,
+      "time": "00:08:35",
+      "pressureMPa": 2.479,
+      "pressureKPa": 2479.0,
+      "dRiMm": 7.132,
+      "radiusMm": 41.387,
+      "volumeCm3": 774.1218054965583
+    },
+    {
+      "index": 56,
+      "time": "00:08:43",
+      "pressureMPa": 2.511,
+      "pressureKPa": 2511.0,
+      "dRiMm": 7.439,
+      "radiusMm": 41.599,
+      "volumeCm3": 807.2838895479
+    },
+    {
+      "index": 57,
+      "time": "00:08:50",
+      "pressureMPa": 2.571,
+      "pressureKPa": 2571.0,
+      "dRiMm": 7.736,
+      "radiusMm": 41.804,
+      "volumeCm3": 839.5121345546446
+    },
+    {
+      "index": 58,
+      "time": "00:08:57",
+      "pressureMPa": 2.592,
+      "pressureKPa": 2592.0,
+      "dRiMm": 8.027,
+      "radiusMm": 42.007,
+      "volumeCm3": 871.5820772208475
+    },
+    {
+      "index": 59,
+      "time": "00:09:04",
+      "pressureMPa": 2.58,
+      "pressureKPa": 2580.0,
+      "dRiMm": 8.321,
+      "radiusMm": 42.213,
+      "volumeCm3": 904.2847749749151
+    },
+    {
+      "index": 60,
+      "time": "00:09:11",
+      "pressureMPa": 2.645,
+      "pressureKPa": 2645.0,
+      "dRiMm": 8.608,
+      "radiusMm": 42.414,
+      "volumeCm3": 936.3479204912536
+    },
+    {
+      "index": 61,
+      "time": "00:09:19",
+      "pressureMPa": 2.674,
+      "pressureKPa": 2674.0,
+      "dRiMm": 8.915,
+      "radiusMm": 42.631,
+      "volumeCm3": 971.1343329798891
+    },
+    {
+      "index": 62,
+      "time": "00:09:27",
+      "pressureMPa": 2.69,
+      "pressureKPa": 2690.0,
+      "dRiMm": 9.211,
+      "radiusMm": 42.842,
+      "volumeCm3": 1005.1291357481326
+    },
+    {
+      "index": 63,
+      "time": "00:09:36",
+      "pressureMPa": 2.694,
+      "pressureKPa": 2694.0,
+      "dRiMm": 9.505,
+      "radiusMm": 43.051,
+      "volumeCm3": 1038.9671742995993
+    },
+    {
+      "index": 64,
+      "time": "00:09:44",
+      "pressureMPa": 2.715,
+      "pressureKPa": 2715.0,
+      "dRiMm": 9.79,
+      "radiusMm": 43.255,
+      "volumeCm3": 1072.1545016762316
+    },
+    {
+      "index": 65,
+      "time": "00:09:53",
+      "pressureMPa": 2.729,
+      "pressureKPa": 2729.0,
+      "dRiMm": 10.08,
+      "radiusMm": 43.464,
+      "volumeCm3": 1106.3179476513933
+    },
+    {
+      "index": 66,
+      "time": "00:10:02",
+      "pressureMPa": 2.743,
+      "pressureKPa": 2743.0,
+      "dRiMm": 10.374,
+      "radiusMm": 43.677,
+      "volumeCm3": 1141.3046706008963
+    },
+    {
+      "index": 67,
+      "time": "00:10:11",
+      "pressureMPa": 2.758,
+      "pressureKPa": 2758.0,
+      "dRiMm": 10.657,
+      "radiusMm": 43.882,
+      "volumeCm3": 1175.1388600730431
+    },
+    {
+      "index": 68,
+      "time": "00:10:21",
+      "pressureMPa": 2.735,
+      "pressureKPa": 2735.0,
+      "dRiMm": 10.931,
+      "radiusMm": 44.082,
+      "volumeCm3": 1208.300506814688
+    },
+    {
+      "index": 69,
+      "time": "00:10:28",
+      "pressureMPa": 2.787,
+      "pressureKPa": 2787.0,
+      "dRiMm": 11.215,
+      "radiusMm": 44.291,
+      "volumeCm3": 1243.1155555486794
+    },
+    {
+      "index": 70,
+      "time": "00:10:38",
+      "pressureMPa": 2.764,
+      "pressureKPa": 2764.0,
+      "dRiMm": 11.499,
+      "radiusMm": 44.499,
+      "volumeCm3": 1277.9275186103675
+    },
+    {
+      "index": 71,
+      "time": "00:10:49",
+      "pressureMPa": 2.8,
+      "pressureKPa": 2800.0,
+      "dRiMm": 11.787,
+      "radiusMm": 44.712,
+      "volumeCm3": 1313.745337330007
+    },
+    {
+      "index": 72,
+      "time": "00:10:53",
+      "pressureMPa": 2.576,
+      "pressureKPa": 2576.0,
+      "dRiMm": 11.809,
+      "radiusMm": 44.729,
+      "volumeCm3": 1316.6114066530092
+    },
+    {
+      "index": 73,
+      "time": "00:10:55",
+      "pressureMPa": 2.371,
+      "pressureKPa": 2371.0,
+      "dRiMm": 11.71,
+      "radiusMm": 44.657,
+      "volumeCm3": 1304.4802245326698
+    },
+    {
+      "index": 74,
+      "time": "00:10:57",
+      "pressureMPa": 2.171,
+      "pressureKPa": 2171.0,
+      "dRiMm": 11.549,
+      "radiusMm": 44.539,
+      "volumeCm3": 1284.6408256509353
+    },
+    {
+      "index": 75,
+      "time": "00:11:00",
+      "pressureMPa": 1.959,
+      "pressureKPa": 1959.0,
+      "dRiMm": 11.303,
+      "radiusMm": 44.358,
+      "volumeCm3": 1254.3112172440322
+    },
+    {
+      "index": 76,
+      "time": "00:11:02",
+      "pressureMPa": 1.773,
+      "pressureKPa": 1773.0,
+      "dRiMm": 11.014,
+      "radiusMm": 44.147,
+      "volumeCm3": 1219.1105103657974
+    },
+    {
+      "index": 77,
+      "time": "00:11:05",
+      "pressureMPa": 1.632,
+      "pressureKPa": 1632.0,
+      "dRiMm": 10.733,
+      "radiusMm": 43.943,
+      "volumeCm3": 1185.237179790779
+    },
+    {
+      "index": 78,
+      "time": "00:11:07",
+      "pressureMPa": 1.508,
+      "pressureKPa": 1508.0,
+      "dRiMm": 10.44,
+      "radiusMm": 43.73,
+      "volumeCm3": 1150.0368612133955
+    },
+    {
+      "index": 79,
+      "time": "00:11:10",
+      "pressureMPa": 1.405,
+      "pressureKPa": 1405.0,
+      "dRiMm": 10.147,
+      "radiusMm": 43.518,
+      "volumeCm3": 1115.1716368464972
+    },
+    {
+      "index": 80,
+      "time": "00:11:12",
+      "pressureMPa": 1.318,
+      "pressureKPa": 1318.0,
+      "dRiMm": 9.868,
+      "radiusMm": 43.317,
+      "volumeCm3": 1082.2719329587162
+    },
+    {
+      "index": 81,
+      "time": "00:11:15",
+      "pressureMPa": 1.237,
+      "pressureKPa": 1237.0,
+      "dRiMm": 9.577,
+      "radiusMm": 43.109,
+      "volumeCm3": 1048.3868251811582
+    },
+    {
+      "index": 82,
+      "time": "00:11:18",
+      "pressureMPa": 1.165,
+      "pressureKPa": 1165.0,
+      "dRiMm": 9.295,
+      "radiusMm": 42.908,
+      "volumeCm3": 1015.7970419219279
+    },
+    {
+      "index": 83,
+      "time": "00:11:21",
+      "pressureMPa": 1.098,
+      "pressureKPa": 1098.0,
+      "dRiMm": 9.007,
+      "radiusMm": 42.703,
+      "volumeCm3": 982.7155906159517
+    },
+    {
+      "index": 84,
+      "time": "00:11:25",
+      "pressureMPa": 1.038,
+      "pressureKPa": 1038.0,
+      "dRiMm": 8.704,
+      "radiusMm": 42.489,
+      "volumeCm3": 948.3507993393014
+    },
+    {
+      "index": 85,
+      "time": "00:11:28",
+      "pressureMPa": 0.973,
+      "pressureKPa": 973.0,
+      "dRiMm": 8.405,
+      "radiusMm": 42.279,
+      "volumeCm3": 914.7961770558051
+    },
+    {
+      "index": 86,
+      "time": "00:11:32",
+      "pressureMPa": 0.918,
+      "pressureKPa": 918.0,
+      "dRiMm": 8.118,
+      "radiusMm": 42.078,
+      "volumeCm3": 882.8353280794529
+    },
+    {
+      "index": 87,
+      "time": "00:11:36",
+      "pressureMPa": 0.864,
+      "pressureKPa": 864.0,
+      "dRiMm": 7.83,
+      "radiusMm": 41.877,
+      "volumeCm3": 851.0267872848578
+    },
+    {
+      "index": 88,
+      "time": "00:11:40",
+      "pressureMPa": 0.814,
+      "pressureKPa": 814.0,
+      "dRiMm": 7.536,
+      "radiusMm": 41.673,
+      "volumeCm3": 818.8992271810687
+    },
+    {
+      "index": 89,
+      "time": "00:11:44",
+      "pressureMPa": 0.768,
+      "pressureKPa": 768.0,
+      "dRiMm": 7.233,
+      "radiusMm": 41.465,
+      "volumeCm3": 786.303248072807
+    },
+    {
+      "index": 90,
+      "time": "00:11:49",
+      "pressureMPa": 0.721,
+      "pressureKPa": 721.0,
+      "dRiMm": 6.932,
+      "radiusMm": 41.258,
+      "volumeCm3": 754.0259075127096
+    },
+    {
+      "index": 91,
+      "time": "00:11:54",
+      "pressureMPa": 0.673,
+      "pressureKPa": 673.0,
+      "dRiMm": 6.627,
+      "radiusMm": 41.05,
+      "volumeCm3": 721.7553471378767
+    },
+    {
+      "index": 92,
+      "time": "00:12:00",
+      "pressureMPa": 0.627,
+      "pressureKPa": 627.0,
+      "dRiMm": 6.327,
+      "radiusMm": 40.847,
+      "volumeCm3": 690.4177888873602
+    },
+    {
+      "index": 93,
+      "time": "00:12:06",
+      "pressureMPa": 0.584,
+      "pressureKPa": 584.0,
+      "dRiMm": 6.027,
+      "radiusMm": 40.645,
+      "volumeCm3": 659.3888110619685
+    },
+    {
+      "index": 94,
+      "time": "00:12:13",
+      "pressureMPa": 0.541,
+      "pressureKPa": 541.0,
+      "dRiMm": 5.72,
+      "radiusMm": 40.439,
+      "volumeCm3": 627.9038247797216
+    },
+    {
+      "index": 95,
+      "time": "00:12:22",
+      "pressureMPa": 0.508,
+      "pressureKPa": 508.0,
+      "dRiMm": 5.416,
+      "radiusMm": 40.237,
+      "volumeCm3": 597.1855479544955
+    },
+    {
+      "index": 96,
+      "time": "00:12:37",
+      "pressureMPa": 0.472,
+      "pressureKPa": 472.0,
+      "dRiMm": 5.113,
+      "radiusMm": 40.037,
+      "volumeCm3": 566.9229629135829
+    },
+    {
+      "index": 97,
+      "time": "00:12:54",
+      "pressureMPa": 0.431,
+      "pressureKPa": 431.0,
+      "dRiMm": 4.809,
+      "radiusMm": 39.837,
+      "volumeCm3": 536.8111743200441
+    },
+    {
+      "index": 98,
+      "time": "00:13:13",
+      "pressureMPa": 0.391,
+      "pressureKPa": 391.0,
+      "dRiMm": 4.503,
+      "radiusMm": 39.637,
+      "volumeCm3": 506.85018217387614
+    },
+    {
+      "index": 99,
+      "time": "00:13:37",
+      "pressureMPa": 0.352,
+      "pressureKPa": 352.0,
+      "dRiMm": 4.194,
+      "radiusMm": 39.437,
+      "volumeCm3": 477.03998647508035
+    },
+    {
+      "index": 100,
+      "time": "00:14:06",
+      "pressureMPa": 0.312,
+      "pressureKPa": 312.0,
+      "dRiMm": 3.881,
+      "radiusMm": 39.236,
+      "volumeCm3": 447.2326691034745
+    },
+    {
+      "index": 101,
+      "time": "00:14:43",
+      "pressureMPa": 0.273,
+      "pressureKPa": 273.0,
+      "dRiMm": 3.569,
+      "radiusMm": 39.036,
+      "volumeCm3": 417.7248202816615
+    },
+    {
+      "index": 102,
+      "time": "00:15:33",
+      "pressureMPa": 0.237,
+      "pressureKPa": 237.0,
+      "dRiMm": 3.254,
+      "radiusMm": 38.836,
+      "volumeCm3": 388.3677679072198
+    },
+    {
+      "index": 103,
+      "time": "00:16:40",
+      "pressureMPa": 0.205,
+      "pressureKPa": 205.0,
+      "dRiMm": 2.936,
+      "radiusMm": 38.636,
+      "volumeCm3": 359.16151198015115
+    },
+    {
+      "index": 104,
+      "time": "00:17:36",
+      "pressureMPa": 0.178,
+      "pressureKPa": 178.0,
+      "dRiMm": 2.614,
+      "radiusMm": 38.435,
+      "volumeCm3": 329.9611540791302
+    },
+    {
+      "index": 105,
+      "time": "00:18:15",
+      "pressureMPa": 0.155,
+      "pressureKPa": 155.0,
+      "dRiMm": 2.291,
+      "radiusMm": 38.235,
+      "volumeCm3": 301.0572450290422
+    },
+    {
+      "index": 106,
+      "time": "00:20:07",
+      "pressureMPa": 0.142,
+      "pressureKPa": 142.0,
+      "dRiMm": 1.966,
+      "radiusMm": 38.036,
+      "volumeCm3": 272.4475228831778
+    },
+    {
+      "index": 107,
+      "time": "00:21:38",
+      "pressureMPa": 0.125,
+      "pressureKPa": 125.0,
+      "dRiMm": 1.638,
+      "radiusMm": 37.836,
+      "volumeCm3": 243.84445274559778
+    }
+  ],
+  "calibration": {
+    "kp": 1.0,
+    "ga": 1.0,
+    "radiusMm": 35.0,
+    "poisson": 0.33,
+    "correctionsAlreadyApplied": true
+  },
+  "additionalParams": {
+    "diameter": 76.0
+  },
+  "graphParams": {
+    "fit_start_idx": 6,
+    "fit_end_idx": 14,
+    "programme_a": false,
+    "programme_b": false,
+    "programme_c": false,
+    "gl1_range": [
+      6,
+      14
+    ],
+    "gur_loops": [
+      [
+        14,
+        29
+      ],
+      [
+        29,
+        43
+      ],
+      [
+        43,
+        72
+      ]
+    ],
+    "gl1_skip_first_loop": true,
+    "programme_a_manual_enabled": false,
+    "programme_a_gl1_range_manual": null,
+    "programme_a_loops_manual": [
+      null,
+      null,
+      null
+    ],
+    "programme_a_gu_ranges_manual": [
+      null,
+      null,
+      null
+    ],
+    "programme_a_gr_ranges_manual": [
+      null,
+      null,
+      null
+    ],
+    "programme_a_gu_final_range_manual": null,
+    "kf_t1": null,
+    "kf_t2": null,
+    "kf_delta1": null,
+    "kf_delta2": null,
+    "pf_manual_kpa": null,
+    "programme_a_edit_phase": "LOOP",
+    "show_gl1": true,
+    "show_gur1": true,
+    "show_gur2": true,
+    "show_gur3": true,
+    "ps_manual_kpa": 1579.0,
+    "pl_manual_kpa": 2800.0,
+    "programme_a_gu_ranges": [
+      [
+        14,
+        19
+      ],
+      [
+        28,
+        34
+      ],
+      [
+        42,
+        48
+      ]
+    ],
+    "programme_a_gr_ranges": [
+      [
+        18,
+        29
+      ],
+      [
+        33,
+        43
+      ],
+      [
+        47,
+        60
+      ]
+    ],
+    "K_from_graph": 446.90546791469615,
+    "E_from_graph": 20.80344953142911,
+    "delta_P_MPa": 0.6460000000000001,
+    "delta_R_mm": 1.4440000000000026
+  },
+  "resultsLegacy": {
+    "pL": 2800.0,
+    "p0": 1579.0,
+    "ps": 1579.0,
+    "sigma_h0": 1579.0,
+    "sigma_h0_effective": 1579.0
+  },
+  "resultsIsoLegacy": {
+    "pL": 2800.0,
+    "p0": 1579.0,
+    "ps": 1579.0,
+    "sigma_h0": 1579.0,
+    "sigma_h0_effective": 1579.0
+  },
+  "testMetadata": {
+    "control_unit": "Elast Logger 3",
+    "test_date": "2026-09-06",
+    "hole_no": "68295",
+    "depth": 14.0
+  },
+  "companyInfo": {
+    "test_number": "2",
+    "test_depth": "14.0",
+    "logo_path": "L:/20.Logo Geologic/LOGO_NOU_Geologic Site.jpg",
+    "company_name": "SC GEOLOGIC SITE SRL",
+    "project": "Autostrada Targu Neamt - Iasi - Ungheni - Tronson 3 Letcani (DN 28) - DN 24 (Iasi)",
+    "tema": "Proiectare și Execuție Autostrada Târgu Mureș – Târgu Neamț, \nSecțiunea II Miercurea Nirajului – Leghin, LOT 2A: Ditrău-Grințieș",
+    "hole_name": "68295",
+    "operator": "",
+    "field_manager": "",
+    "intocmit": "",
+    "borehole_diameter": "76",
+    "packer_diameter": "70",
+    "packer_type": "NX Soft",
+    "coord_system": "",
+    "elevation": "",
+    "borehole_angle": "",
+    "drilling_technique": "",
+    "ground_description": "",
+    "groundwater_depth": "",
+    "groundwater_date": "",
+    "pressuremeter_type": "Monocellular – măsurare la peretele cavității (Fig. 3 c)",
+    "probe_id": "",
+    "control_unit": "Elast Logger 3",
+    "calib_cylinder_kp": "76",
+    "calib_cylinder_ga": "85",
+    "loading_programme": "A – bucle cu descărcare aproape totală",
+    "test_date": "",
+    "test_start_time": "",
+    "test_end_time": "",
+    "deviations": "",
+    "observatii_pl": "",
+    "location": "Letcani-Iasi",
+    "membrane_calibration_note": "Calibrare membrană efectuată în aparat (Elast Logger); certificat/procedură anexată la nevoie",
+    "pe_correction": "Aplicată în unitatea de control; datele exportate sunt deja corectate",
+    "ph_correction": "Aplicată în unitatea de control; datele exportate sunt deja corectate",
+    "radius_initial_correction": "Aplicată în unitatea de control; datele exportate sunt deja corectate"
+  },
+  "reportConfig": {
+    "header": false,
+    "title_standard": true,
+    "company_info": true,
+    "calculation_brief": true,
+    "detailed_results": true,
+    "graph": false,
+    "report_lang": "ro"
+  },
+  "correctionsAlreadyApplied": true,
+  "warnings": [
+    "Conversie din pickle OYO — rulați doar pe fișiere de încredere.",
+    "Kp/Ga: în OYO recent, calea de calcul nota că Kp/Ga sunt scoase din calcule; FlexiPMT nu reaplică corecții la import.",
+    "pL din resultsLegacy (= max P) NU trebuie tratat ca rupere automată."
+  ]
+}

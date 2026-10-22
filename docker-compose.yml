@@ -1,0 +1,16 @@
+# Postgres local (opțional) — alternativă la Supabase pentru dezvoltare
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: flexipmt
+      POSTGRES_PASSWORD: flexipmt
+      POSTGRES_DB: flexipmt
+    volumes:
+      - flexipmt_pg:/var/lib/postgresql/data
+
+volumes:
+  flexipmt_pg:

@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FlexiPMT
 
-## Getting Started
+Aplicație web pentru gestionarea, prelucrarea și raportarea încercărilor de presiometrie OYO (referință SR EN ISO 22476-5:2023).
 
-First, run the development server:
+Organizare: **Proiect → Foraj → Test**, calcule în modul separat, PostgreSQL, UI în română (raport RO/EN).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Repo: [github.com/ShubaHD/FlexiPMT](https://github.com/ShubaHD/FlexiPMT)
+
+## Pornire locală
+
+1. Copiază `.env.example` → `.env` și completează `DATABASE_URL` + `DIRECT_URL`.
+
+**Opțiunea A — Postgres local (Docker):**
+
+```powershell
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+În `.env`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+DATABASE_URL="postgresql://flexipmt:flexipmt@localhost:5432/flexipmt"
+DIRECT_URL="postgresql://flexipmt:flexipmt@localhost:5432/flexipmt"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Opțiunea B — Supabase:** folosește connection strings din Dashboard → Project Settings → Database (vezi mai jos).
 
-## Learn More
+```powershell
+npm install
+npx prisma migrate deploy
+npm run db:seed-demo
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Deschide [http://localhost:3002](http://localhost:3002).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy online (Vercel + Supabase)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Supabase
 
-## Deploy on Vercel
+1. Creează un proiect pe [supabase.com](https://supabase.com)
+2. **Project Settings → Database → Connection string**
+   - **Transaction** (pooler, port `6543`) → `DATABASE_URL`  
+     Adaugă la final: `?pgbouncer=true`
+   - **Session** sau **Direct** (port `5432`) → `DIRECT_URL`
+3. (Opțional) rulează migrările din local o dată:
+   ```powershell
+   npx prisma migrate deploy
+   ```
+   (Vercel le rulează și la `npm run build`.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Intră pe [vercel.com](https://vercel.com) → **Add New Project** → importă `ShubaHD/FlexiPMT`
+2. Environment Variables:
+   - `DATABASE_URL` = pooler Supabase (`…:6543/postgres?pgbouncer=true`)
+   - `DIRECT_URL` = conexiune directă / session (`…:5432/postgres`)
+3. Deploy. URL-ul va fi de forma `https://flexipmt-….vercel.app`
+
+### 3. După primul deploy
+
+- Deschide aplicația → **Setări** (firmă, logo, Întocmit/Verificat)
+- Sau rulează seed local împotriva bazei Supabase: `npm run db:seed-demo`
+
+## Flux tipic (Elast Logger)
+
+1. **Proiecte** → proiect + foraj  
+2. Pe foraj / test: **Import CSV** Elast  
+3. Completează datele obligatorii (ν, L celulă, limită aparat, interval fit, ps)  
+4. Grafic → selecții pe program  
+5. **Raport** → limba RO/EN → Tipărește/PDF  
+
+## Teste
+
+```powershell
+npm test
+```
+
+## Structură
+
+- `src/lib/calc` — formule ISO (5)/(6)/(7), programe A/B/C/D
+- `src/lib/import` — Elast CSV + JSON migrat
+- `src/lib/schema` — schema internă v1
+- `src/lib/report` — conținut raport + i18n RO/EN
+- `prisma` — PostgreSQL (Proiect / Foraj / PmtTest / LabSettings)
+- `fixtures/reference/` — CSV de regresie
+
+## Note importante
+
+- **pMax ≠ rupere / pL**: maximul e pMax; ruperea se consemnează explicit.
+- Programe A/B/C/D: rezultate distincte; fără atribuire automată fără confirmare.
+- Pentru CSV Elast (dRi), baza implicită este Formula (5).
+- Nu comiteți `.env` (parole Supabase).
