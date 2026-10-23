@@ -91,6 +91,10 @@ type Props = {
   onCommitSelection?: (indices: number[]) => void;
   onCancelDraft?: () => void;
   onResetResultSelection?: () => void;
+  /** Mesaj live pentru bandă 30–70% (Program A) */
+  selectionHint?: string | null;
+  /** Restrânge draft-ul la punctele din banda 30–70% */
+  onClipDraftToBand?: () => void;
   chartAxisMode?: ChartAxisMode;
   onChartAxisModeChange?: (mode: ChartAxisMode) => void;
   chartTickSettings?: ChartTickSettings;
@@ -205,6 +209,8 @@ export function PmtChart({
   onCommitSelection,
   onCancelDraft,
   onResetResultSelection,
+  selectionHint = null,
+  onClipDraftToBand,
   chartAxisMode = "p_R",
   onChartAxisModeChange,
   chartTickSettings: chartTickSettingsProp,
@@ -926,6 +932,17 @@ export function PmtChart({
                 >
                   Resetează rezultatul
                 </button>
+                {onClipDraftToBand && (
+                  <button
+                    type="button"
+                    className="btn text-sm"
+                    onClick={onClipDraftToBand}
+                    disabled={draftCount < 2}
+                    title="Păstrează doar punctele între liniile 30% și 70%"
+                  >
+                    Restrânge la 30–70%
+                  </button>
+                )}
               </>
             )}
             <button
@@ -991,6 +1008,25 @@ export function PmtChart({
           Mod selecție activ pentru <strong>{selectionTargetKey}</strong>: trageți
           un dreptunghi sau apăsați pe un punct (Shift+click = interval pe Number
           CSV). Selecția folosește identificatorii CSV. Zoom dezactivat.
+          {/^GU\d+$|^GR\d+$/.test(selectionTargetKey) && (
+            <>
+              {" "}
+              Pentru Program A: alegeți <strong>doar mijlocul ramurii</strong>{" "}
+              (între liniile 30% și 70%), nu vârfurile buclei.
+            </>
+          )}
+        </p>
+      )}
+
+      {!readOnly && selectMode && selectionHint && (
+        <p
+          className={`rounded border px-3 py-2 text-sm no-print ${
+            /OK|abatere \(motiv/.test(selectionHint)
+              ? "border-line bg-accent-soft/30"
+              : "border-red-300 bg-red-50 text-[var(--danger)]"
+          }`}
+        >
+          {selectionHint}
         </p>
       )}
 

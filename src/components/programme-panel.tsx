@@ -92,6 +92,7 @@ export function ProgrammePanel({
       if (!ok) return;
     }
     const nextKeys = availableResultKeys(value);
+    const keySet = new Set(nextKeys);
     patchState({
       programme: value,
       programmeConfirmed: value !== "none",
@@ -99,6 +100,8 @@ export function ProgrammePanel({
         ps.selectionTargetKey && nextKeys.includes(ps.selectionTargetKey)
           ? ps.selectionTargetKey
           : null,
+      // Nu păstra GUR când treci pe A (și invers) — evită confuzia pe grafic
+      fitOverrides: ps.fitOverrides.filter((o) => keySet.has(o.resultKey)),
     });
   }
 
@@ -297,12 +300,19 @@ export function ProgrammePanel({
       )}
 
       <div className="field max-w-xl">
-        <label>Motiv (abatere 30–70% / subset buclă B)</label>
+        <label>
+          Motiv (obligatoriu dacă selecția GUi/GRi iese din banda 30–70%)
+        </label>
         <input
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          placeholder="Motiv obligatoriu la abatere"
+          placeholder="ex. puncte pe zona liniară vizibilă; bandă restrânsă din cauza zgomotului"
         />
+        <p className="mt-1 text-[11px] text-muted">
+          Program A: selectați doar mijlocul ramurii (între liniile 30% și 70% pe
+          grafic). Dacă includeți și vârfurile buclei, trebuie motiv — altfel
+          „Aplică” este blocat.
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-2">

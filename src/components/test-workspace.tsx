@@ -16,6 +16,7 @@ import { activePoints, missingRequiredFields } from "@/lib/schema/pmt-v1";
 import { STATUS_LABELS, type TestStatus } from "@/lib/types";
 import {
   activeIndicesFromCsvNumbers,
+  availableResultKeys,
   checkProgrammeABand,
   estimateLoopPressuresAroundSelection,
   selectionCoversLoop,
@@ -414,8 +415,86 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
           boreholeDiameterMm={
             payload.requiredInputs?.boreholeDiameterMm ?? null
           }
-          fitOverrides={payload.programmeState?.fitOverrides}
+          fitOverrides={(() => {
+            const ps = payload.programmeState;
+            if (!ps) return undefined;
+            const keys = new Set(availableResultKeys(ps.programme));
+            return ps.fitOverrides.filter((o) => keys.has(o.resultKey));
+          })()}
           selectionTargetKey={payload.programmeState?.selectionTargetKey}
+          selectionHint={(() => {
+            const ps = payload.programmeState;
+            const key = ps?.selectionTargetKey;
+            if (
+              !selectMode ||
+              !ps ||
+              ps.programme !== "A" ||
+              !key ||
+              !/^GU\d+$|^GR\d+$/.test(key) ||
+              draftIndices.length < 2
+            ) {
+              return null;
+            }
+            const active = activePoints(payload.workingPoints);
+            const band = checkProgrammeABand(
+              key,
+              active,
+              draftIndices,
+              draftIndices.map((i) => active[i])
+            );
+            if (!band.outside) {
+              return `Banda 30–70% OK pentru ${key}. Apăsați Aplică.`;
+            }
+            if (selReason.trim()) {
+              return `${key}: în afara 30–70% — se va marca ca abatere (motiv completat).`;
+            }
+            return `${key}: selecția iese din banda 30–70% (între liniile punctate). Restrângeți selecția SAU completați „Motiv” în panoul Interpretare, apoi Aplică.`;
+          })()}
+          onClipDraftToBand={(() => {
+            const ps = payload.programmeState;
+            const key = ps?.selectionTargetKey;
+            if (
+              !ps ||
+              ps.programme !== "A" ||
+              !key ||
+              !/^GU\d+$|^GR\d+$/.test(key)
+            ) {
+              return undefined;
+            }
+            return () => {
+              const active = activePoints(payload.workingPoints);
+              const est = estimateLoopPressuresAroundSelection(
+                active,
+                draftIndices.length ? draftIndices : [0]
+              );
+              if (!est || draftIndices.length === 0) {
+                setErr(
+                  "Selectați mai întâi câteva puncte pe ramura de descărcare (GUi) sau reîncărcare (GRi)."
+                );
+                return;
+              }
+              const clipped = draftIndices.filter((i) => {
+                const p = active[i]?.pressureKPa;
+                return (
+                  p != null && p >= est.pLo - 1 && p <= est.pHi + 1
+                );
+              });
+              if (clipped.length < 2) {
+                setErr(
+                  "După restrângere la 30–70% rămân sub 2 puncte. Selectați mai multe puncte pe mijlocul ramurii (între liniile 30% și 70%)."
+                );
+                window.alert(
+                  "Prea puține puncte în banda 30–70%. Selectați mijlocul ramurii (între liniile punctate 30% și 70%), nu vârfurile buclei."
+                );
+                return;
+              }
+              setDraftIndices(clipped);
+              setErr(null);
+              setMsg(
+                `Draft restrâns la banda 30–70%: ${clipped.length} puncte. Apăsați Aplică.`
+              );
+            };
+          })()}
           fitActiveIndices={(() => {
             const key = payload.programmeState?.selectionTargetKey;
             const ov = payload.programmeState?.fitOverrides.find(
@@ -561,10 +640,11 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
               );
               outsideStandardBand = band.outside;
               if (outsideStandardBand && !selReason.trim()) {
-                setErr(
+                const msg =
                   band.message ||
-                    "Introduceți motivul pentru abaterea 30–70% (câmpul Motiv din panoul Program)."
-                );
+                  `${key}: selecția iese din banda 30–70%. Completați câmpul „Motiv” din panoul Interpretare, sau restrângeți selecția între liniile 30% / 70% pe grafic.`;
+                setErr(msg);
+                window.alert(msg);
                 return;
               }
             }
