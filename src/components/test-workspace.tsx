@@ -18,7 +18,7 @@ import {
   activeIndicesFromCsvNumbers,
   availableResultKeys,
   checkProgrammeABand,
-  estimateLoopPressuresAroundSelection,
+  programmeABandForKey,
   selectionCoversLoop,
   selectionToOverride,
 } from "@/lib/calc/programme-moduli";
@@ -475,11 +475,18 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
             }
             return () => {
               const active = activePoints(payload.workingPoints);
-              const est = estimateLoopPressuresAroundSelection(
+              const est = programmeABandForKey(
+                key,
                 active,
-                draftIndices.length ? draftIndices : [0]
+                draftIndices
               );
-              if (!est || draftIndices.length === 0) {
+              if (!est) {
+                setErr(
+                  "Nu s-a putut determina bucla (pi / p1.1) pentru banda 30–70%."
+                );
+                return;
+              }
+              if (draftIndices.length === 0) {
                 setErr(
                   "Selectați mai întâi câteva puncte pe ramura de descărcare (GUi) sau reîncărcare (GRi)."
                 );
@@ -503,7 +510,7 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
               setDraftIndices(clipped);
               setErr(null);
               setMsg(
-                `Draft restrâns la banda 30–70%: ${clipped.length} puncte. Apăsați Aplică.`
+                `Draft restrâns la banda 30–70% (bucla ${est.loopIndex ?? "?"}): ${clipped.length} puncte. Apăsați Aplică.`
               );
             };
           })()}
@@ -533,16 +540,12 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
             if (!key || payload.programmeState?.programme !== "A") return null;
             if (!/^GU\d+$|^GR\d+$/.test(key)) return null;
             const active = activePoints(payload.workingPoints);
-            const ov = payload.programmeState?.fitOverrides.find(
-              (o) => o.resultKey === key
+            // Bandă fixă pe bucla i (pi–p1.1) — nu pe draft, ca liniile să nu „fugă”
+            const est = programmeABandForKey(
+              key,
+              active,
+              selectMode ? draftIndices : []
             );
-            const idx =
-              selectMode && draftIndices.length > 0
-                ? draftIndices
-                : ov?.csvPointNumbers?.length
-                  ? activeIndicesFromCsvNumbers(active, ov.csvPointNumbers)
-                  : ov?.activeIndices ?? [];
-            const est = estimateLoopPressuresAroundSelection(active, idx);
             return est ? { pLo: est.pLo, pHi: est.pHi } : null;
           })()}
           selectMode={selectMode}

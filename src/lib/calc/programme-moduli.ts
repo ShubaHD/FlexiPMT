@@ -223,36 +223,106 @@ export function selectionCoversLoop(
   return true;
 }
 
+export type ProgrammeABand = {
+  pi: number;
+  p11: number;
+  pLo: number;
+  pHi: number;
+  loopIndex: number | null;
+  /** bandă din pi/p1.1 ale buclei detectate (fixă), nu din subsetul selectat */
+  source: "loop" | "phase" | "none";
+};
+
 /**
- * Estimează pi / p1.1 din extrema locală pe curba activă în jurul selecției
- * (doar pentru afișarea benzii 30–70% — nu atribuie puncte).
+ * Bandă 30–70% ISO §6.4.2: fixă pe (pi, p1.1) ale buclei i (GU1/GR1 → bucla 1).
+ * Nu depinde de punctele selectate — altfel liniile 30%/70% „fug” pe grafic.
  */
+export function programmeABandForKey(
+  key: string,
+  active: WorkingPoint[],
+  indices: number[] = []
+): ProgrammeABand | null {
+  const m = /^(?:GU|GR)(\d+)$/.exec(key);
+  if (!m || active.length === 0) return null;
+  const loopNo = Number(m[1]);
+  const seg = segmentPressureCurve(active);
+
+  let loop =
+    seg.loops.find((l) => l.index === loopNo) ??
+    null;
+
+  // Dacă numărul buclei lipsește (ex. descărcare finală ca GUn), folosește bucla
+  // care acoperă selecția — tot pe extrema buclei, nu pe subset.
+  if (!loop && indices.length > 0) {
+    let best = null as (typeof seg.loops)[0] | null;
+    let bestOverlap = 0;
+    for (const l of seg.loops) {
+      const overlap = indices.filter(
+        (i) => i >= l.startIdx && i <= l.endIdx
+      ).length;
+      if (overlap > bestOverlap) {
+        bestOverlap = overlap;
+        best = l;
+      }
+    }
+    loop = best;
+  }
+
+  if (loop && loop.piKPa > loop.p11KPa) {
+    const span = loop.piKPa - loop.p11KPa;
+    return {
+      pi: loop.piKPa,
+      p11: loop.p11KPa,
+      pLo: loop.p11KPa + 0.3 * span,
+      pHi: loop.p11KPa + 0.7 * span,
+      loopIndex: loop.index,
+      source: "loop",
+    };
+  }
+
+  // Descărcare finală / fază fără buclă completă: pi/p1.1 din fază
+  const unloadPhases = seg.phases.filter(
+    (p) => p.kind === "unloading" || p.kind === "final_unload"
+  );
+  const phase = unloadPhases[loopNo - 1];
+  if (phase) {
+    const slice = active.slice(phase.startIdx, phase.endIdx + 1);
+    const pi = Math.max(...slice.map((p) => p.pressureKPa), phase.pStartKPa);
+    const p11 = Math.min(...slice.map((p) => p.pressureKPa), phase.pEndKPa);
+    if (pi > p11) {
+      const span = pi - p11;
+      return {
+        pi,
+        p11,
+        pLo: p11 + 0.3 * span,
+        pHi: p11 + 0.7 * span,
+        loopIndex: loopNo,
+        source: "phase",
+      };
+    }
+  }
+
+  return null;
+}
+
+/** @deprecated folosiți programmeABandForKey — păstrat pentru compatibilitate apeluri vechi */
 export function estimateLoopPressuresAroundSelection(
   active: WorkingPoint[],
-  indices: number[]
+  indices: number[],
+  resultKey?: string | null
 ): { pi: number; p11: number; pLo: number; pHi: number } | null {
-  if (indices.length === 0 || active.length === 0) return null;
-  const i0 = Math.max(0, Math.min(...indices) - 8);
-  const i1 = Math.min(active.length - 1, Math.max(...indices) + 8);
-  let pi = -Infinity;
-  let p11 = Infinity;
-  for (let i = i0; i <= i1; i++) {
-    const p = active[i].pressureKPa;
-    if (p > pi) pi = p;
-    if (p < p11) p11 = p;
+  if (resultKey) {
+    const band = programmeABandForKey(resultKey, active, indices);
+    if (band) {
+      return { pi: band.pi, p11: band.p11, pLo: band.pLo, pHi: band.pHi };
+    }
   }
-  if (!(pi > p11)) return null;
-  const span = pi - p11;
-  return {
-    pi,
-    p11,
-    pLo: p11 + 0.3 * span,
-    pHi: p11 + 0.7 * span,
-  };
+  // Fără cheie: nu estima din subset (liniile ar fugi) — returnează null
+  return null;
 }
 
 /**
- * Verificare A: punctele selectate ar trebui să fie în 30–70% din (pi…p1.1) local.
+ * Verificare A: punctele selectate ar trebui să fie în 30–70% din (pi…p1.1) ale buclei.
  */
 export function checkProgrammeABand(
   key: string,
@@ -263,7 +333,7 @@ export function checkProgrammeABand(
   if (!/^GU\d+$/.test(key) && !/^GR\d+$/.test(key)) {
     return { outside: false, pLo: 0, pHi: 0, message: null };
   }
-  const est = estimateLoopPressuresAroundSelection(active, indices);
+  const est = programmeABandForKey(key, active, indices);
   if (!est) {
     return { outside: false, pLo: 0, pHi: 0, message: null };
   }
@@ -275,7 +345,7 @@ export function checkProgrammeABand(
     pLo: est.pLo,
     pHi: est.pHi,
     message: outside
-      ? `${key}: selecție în afara benzii recomandate 30–70% (p ∈ [${(est.pLo / 1000).toFixed(3)}, ${(est.pHi / 1000).toFixed(3)}] MPa). Introduceți motivul.`
+      ? `${key}: selecție în afara benzii recomandate 30–70% pe bucla ${est.loopIndex ?? "?"} (p ∈ [${(est.pLo / 1000).toFixed(3)}, ${(est.pHi / 1000).toFixed(3)}] MPa, fix pe pi–p1.1). Introduceți motivul sau restrângeți selecția.`
       : null,
   };
 }

@@ -14,6 +14,7 @@ import {
   availableResultKeys,
   checkProgrammeABand,
   clearManualSelections,
+  programmeABandForKey,
   resetToAutomaticSegmentation,
   runProgrammeCalculations,
   selectionToOverride,
@@ -151,6 +152,29 @@ describe("Selecție manuală — fără preselecție / fără atribuire automat�
     expect(gl1!.dataInterval).toMatch(/n=6/);
     expect(gl1!.formula).toMatch(/Formula \(5\)|Formula \(6\)/);
     expect(payload.results.some((r) => /^GU\d+$/.test(r.key))).toBe(false);
+  });
+
+  it("program A: banda 30–70% e fixă pe buclă, nu pe subsetul selectat", () => {
+    const payload = payloadFromElast("000ELAST.CSV");
+    const active = activePoints(payload.workingPoints);
+    const seg = segmentPressureCurve(active);
+    const loop1 = seg.loops.find((l) => l.index === 1);
+    expect(loop1).toBeTruthy();
+    const bandEmpty = programmeABandForKey("GU1", active, []);
+    const bandSubset = programmeABandForKey("GU1", active, [
+      loop1!.startIdx + 2,
+      loop1!.startIdx + 3,
+    ]);
+    const bandOtherSubset = programmeABandForKey("GU1", active, [
+      loop1!.endIdx - 2,
+      loop1!.endIdx - 1,
+    ]);
+    expect(bandEmpty).toBeTruthy();
+    expect(bandSubset?.pLo).toBe(bandEmpty!.pLo);
+    expect(bandSubset?.pHi).toBe(bandEmpty!.pHi);
+    expect(bandOtherSubset?.pLo).toBe(bandEmpty!.pLo);
+    expect(bandOtherSubset?.pHi).toBe(bandEmpty!.pHi);
+    expect(bandEmpty!.source).toBe("loop");
   });
 
   it("program A: GU1 cu bandă 30–70% — abatere cere motiv", () => {
