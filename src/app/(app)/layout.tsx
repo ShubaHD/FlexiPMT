@@ -2,6 +2,9 @@ import { AppHeader } from "@/components/app-header";
 import { ExplorerClient } from "@/components/explorer";
 import { prisma } from "@/lib/db";
 
+/** Datele din DB trebuie citite la fiecare request (nu cache static gol) */
+export const dynamic = "force-dynamic";
+
 export default async function AppShellLayout({
   children,
 }: {
