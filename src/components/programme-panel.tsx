@@ -319,16 +319,21 @@ export function ProgrammePanel({
         <button type="button" className="btn" onClick={clearAll}>
           Anulează toate selecțiile
         </button>
-        {ps.selectionTargetKey && (
+        {ps.selectionTargetKey &&
+          ps.fitOverrides.some((o) => o.resultKey === ps.selectionTargetKey) && (
           <button
             type="button"
             className="btn"
             onClick={() => saveReason(ps.selectionTargetKey!)}
           >
-            Salvează motiv pentru {ps.selectionTargetKey}
+            Actualizează motivul pe {ps.selectionTargetKey} deja salvat
           </button>
         )}
       </div>
+      <p className="text-xs text-muted">
+        Pentru a salva punctele: completați motivul (dacă e nevoie) și apăsați{" "}
+        <strong>Aplică</strong> pe grafic — nu acest buton.
+      </p>
 
       <p className="text-sm text-muted">{ps.loopCompliance.message}</p>
       {ps.suggestionNote && (

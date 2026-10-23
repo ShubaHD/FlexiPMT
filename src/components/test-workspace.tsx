@@ -351,12 +351,24 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
           );
         }}
         onChange={(next) => {
+          const prevProg = payload.programmeState?.programme;
+          const prevKey = payload.programmeState?.selectionTargetKey;
+          const nextProg = next.programmeState?.programme;
+          const nextKey = next.programmeState?.selectionTargetKey;
+          // Păstrează draft-ul pe grafic dacă doar se editează motiv / setări —
+          // reset doar la schimbare program sau rezultat țintă
+          const resetDraft =
+            prevProg !== nextProg || prevKey !== nextKey;
           setPayload(next);
-          setSelectMode(false);
-          setDraftIndices([]);
+          if (resetDraft) {
+            setSelectMode(false);
+            setDraftIndices([]);
+          }
           void save(next, {
             historyAction: "programme",
-            historyDetail: `Program ${next.programmeState?.programme ?? "?"}`,
+            historyDetail: `Program ${nextProg ?? "?"}${
+              nextKey ? ` · ${nextKey}` : ""
+            }`,
           });
         }}
       />
@@ -534,6 +546,8 @@ export function TestWorkspace({ initial }: { initial: TestDto }) {
             return est ? { pLo: est.pLo, pHi: est.pHi } : null;
           })()}
           selectMode={selectMode}
+          selectionReason={selReason}
+          onSelectionReasonChange={setSelReason}
           psSelectMode={psSelectMode}
           onPsSelectModeChange={setPsSelectMode}
           psCsvPointNumber={payload.requiredInputs?.psCsvPointNumber ?? null}

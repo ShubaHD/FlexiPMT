@@ -95,6 +95,9 @@ type Props = {
   selectionHint?: string | null;
   /** Restrânge draft-ul la punctele din banda 30–70% */
   onClipDraftToBand?: () => void;
+  /** Motiv abatere — editabil lângă Aplică (nu pierde draft-ul) */
+  selectionReason?: string;
+  onSelectionReasonChange?: (v: string) => void;
   chartAxisMode?: ChartAxisMode;
   onChartAxisModeChange?: (mode: ChartAxisMode) => void;
   chartTickSettings?: ChartTickSettings;
@@ -211,6 +214,8 @@ export function PmtChart({
   onResetResultSelection,
   selectionHint = null,
   onClipDraftToBand,
+  selectionReason = "",
+  onSelectionReasonChange,
   chartAxisMode = "p_R",
   onChartAxisModeChange,
   chartTickSettings: chartTickSettingsProp,
@@ -1019,15 +1024,30 @@ export function PmtChart({
       )}
 
       {!readOnly && selectMode && selectionHint && (
-        <p
-          className={`rounded border px-3 py-2 text-sm no-print ${
+        <div
+          className={`rounded border px-3 py-2 text-sm no-print space-y-2 ${
             /OK|abatere \(motiv/.test(selectionHint)
               ? "border-line bg-accent-soft/30"
               : "border-red-300 bg-red-50 text-[var(--danger)]"
           }`}
         >
-          {selectionHint}
-        </p>
+          <p>{selectionHint}</p>
+          {onSelectionReasonChange &&
+            selectionHint.includes("Motiv") && (
+              <div className="field max-w-xl">
+                <label className="text-[var(--ink)]">
+                  Motiv abatere (apoi apăsați Aplică pe grafic)
+                </label>
+                <input
+                  value={selectionReason}
+                  onChange={(e) => onSelectionReasonChange(e.target.value)}
+                  onKeyDown={(e) => e.stopPropagation()}
+                  placeholder="ex. zona liniară vizibilă pe ramură"
+                  className="bg-white"
+                />
+              </div>
+            )}
+        </div>
       )}
 
       {contact &&
