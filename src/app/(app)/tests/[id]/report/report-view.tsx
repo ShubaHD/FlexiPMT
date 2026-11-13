@@ -155,9 +155,44 @@ export function ReportView({
   }, [pdfBase]);
 
   function printReportPdf() {
+    // Titlu scurt pentru numele fișierului PDF; în dialog debifați
+    // „Headers and footers” ca să nu apară titlul/URL pe pagină.
+    const prevTitle = document.title;
     document.title = pdfBase;
+    const restore = () => {
+      document.title = prevTitle || APP_DOC_TITLE;
+      window.removeEventListener("afterprint", restore);
+    };
+    window.addEventListener("afterprint", restore);
     window.print();
   }
+
+  const reportHeader = (
+    <header className="report-block report-doc-header border-b border-line pb-2">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-xs text-muted">
+            {companyName || t.labFallback}
+          </div>
+          {companyAddress && (
+            <div className="text-[0.7rem] text-muted">{companyAddress}</div>
+          )}
+        </div>
+        {logoDataUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={logoDataUrl}
+            alt=""
+            className="report-logo max-h-14 max-w-[9rem] object-contain"
+          />
+        )}
+      </div>
+      <h1 className="mt-1 font-[family-name:var(--font-dm)] text-lg font-semibold leading-tight">
+        {t.title}
+      </h1>
+      <p className="text-sm text-muted">{t.accordingTo}</p>
+    </header>
+  );
 
   function controllingParamLabel(v: string | undefined): string {
     if (v === "pressure") return t.controllingPressure;
@@ -256,33 +291,10 @@ export function ReportView({
       </div>
 
       <article
-        className="report-a4 card mx-auto space-y-3 print:space-y-2 print:border-0 print:shadow-none print:p-0"
+        className="report-a4 card mx-auto space-y-3 print:space-y-1.5 print:border-0 print:shadow-none print:p-0"
         lang={locale === "en" ? "en" : "ro"}
       >
-        <header className="report-block border-b border-line pb-2">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="text-xs text-muted">
-                {companyName || t.labFallback}
-              </div>
-              {companyAddress && (
-                <div className="text-[0.7rem] text-muted">{companyAddress}</div>
-              )}
-            </div>
-            {logoDataUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={logoDataUrl}
-                alt=""
-                className="report-logo max-h-14 max-w-[9rem] object-contain"
-              />
-            )}
-          </div>
-          <h1 className="mt-1 font-[family-name:var(--font-dm)] text-lg font-semibold leading-tight">
-            {t.title}
-          </h1>
-          <p className="text-sm text-muted">{t.accordingTo}</p>
-        </header>
+        {reportHeader}
 
         {(missing.length > 0 || optionalGaps.length > 0) && (
           <section className="report-block no-print rounded border border-amber-300 bg-amber-50 p-2 text-xs">
@@ -446,6 +458,10 @@ export function ReportView({
         </section>
 
         <div className="report-page-2">
+          <div className="report-header-page2 hidden print:block">
+            {reportHeader}
+          </div>
+
           <section className="report-block report-chart">
             <h2 className="mb-1 text-sm font-medium">
               {t.sec5} ({chartLabel})
@@ -461,7 +477,7 @@ export function ReportView({
                 onSelect={() => {}}
                 psKPa={interp.psKPa}
                 apparatusLimitKPa={interp.apparatusLimitKPa}
-                heightPx={240}
+                heightPx={220}
                 readOnly
                 locale={locale}
                 chartAxisMode={chartMode}

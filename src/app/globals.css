@@ -227,11 +227,30 @@ textarea {
 }
 
 @media print {
+  /*
+   * Margini proprii pe pagină — fără spațiu pentru antetul/subsolul browserului.
+   * În dialogul de print: debifați „Headers and footers” / „Anteturi și subsoluri”
+   * ca să nu apară numele fișierului, URL-ul și data Chrome.
+   */
   @page {
     size: A4 portrait;
-    margin: 10mm 9mm 14mm 9mm;
+    margin: 12mm 10mm 12mm 10mm;
 
-    /* Numerotare pagini — separat de subsolul documentului */
+    @top-left {
+      content: none;
+    }
+    @top-center {
+      content: none;
+    }
+    @top-right {
+      content: none;
+    }
+    @bottom-left {
+      content: none;
+    }
+    @bottom-right {
+      content: none;
+    }
     @bottom-center {
       content: "Pagina " counter(page) " / " counter(pages);
       font-size: 8pt;
@@ -268,19 +287,38 @@ textarea {
   }
 
   .report-a4 h1 {
-    font-size: 13pt !important;
-    margin-top: 0.15rem !important;
+    font-size: 12pt !important;
+    margin-top: 0.1rem !important;
+    margin-bottom: 0 !important;
   }
 
   .report-a4 h2 {
-    font-size: 9.5pt !important;
-    margin-bottom: 0.15rem !important;
+    font-size: 9pt !important;
+    margin-bottom: 0.1rem !important;
+  }
+
+  .report-doc-header {
+    padding-bottom: 1.5mm !important;
+    margin-bottom: 1mm;
+  }
+
+  .report-doc-header .text-sm {
+    font-size: 8pt !important;
+  }
+
+  .report-header-page2 {
+    display: block !important;
+    margin-bottom: 2mm;
+  }
+
+  .report-header-page2 .report-doc-header {
+    margin-bottom: 0;
   }
 
   .report-dl {
     grid-template-columns: 9.5rem 1fr;
-    gap: 0.06rem 0.45rem;
-    font-size: 8pt;
+    gap: 0.04rem 0.4rem;
+    font-size: 7.5pt;
   }
 
   .report-a4[lang="en"] .report-dl {
@@ -288,20 +326,20 @@ textarea {
   }
 
   .report-table {
-    font-size: 7pt;
+    font-size: 6.5pt;
   }
 
   .report-table th,
   .report-table td {
-    padding: 0.08rem 0.2rem;
+    padding: 0.05rem 0.15rem;
   }
 
-  /* Nu forța avoid pe tot — pe EN textele lungi împingeau pe pagina 3 */
+  /* Pagina 1: identificare + program + presiuni + rezultate */
   .report-block {
     break-inside: auto;
   }
 
-  /* Pagina 2: grafic + calibrări + semnături (RO = EN) */
+  /* Pagina 2: antet + grafic + calibrări + semnături */
   .report-page-2 {
     break-before: page;
     page-break-before: always;
@@ -314,11 +352,11 @@ textarea {
   }
 
   .report-chart .pmt-chart {
-    max-height: 100mm;
+    max-height: 95mm;
   }
 
   .report-logo {
-    max-height: 10mm !important;
+    max-height: 9mm !important;
   }
 
   .report-signatures {
@@ -332,7 +370,7 @@ textarea {
   }
 
   .report-page-2 .report-block p {
-    font-size: 7.5pt;
-    line-height: 1.25;
+    font-size: 7pt;
+    line-height: 1.2;
   }
 }

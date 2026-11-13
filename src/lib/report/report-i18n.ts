@@ -113,7 +113,7 @@ const ro: Dict = {
   exportCsv: "Export CSV puncte (audit)",
   printPdf: "Tipărește / PDF A4",
   printHint: (file) =>
-    `Fișier: ${file}.pdf. În dialog: debifați „Anteturi și subsoluri” / Headers and footers ca să nu apară data și ora pe pagină.`,
+    `Fișier: ${file}.pdf. În dialogul de tipărire debifați „Anteturi și subsoluri” (Headers and footers) — altfel apar numele fișierului și link-ul în partea de sus.`,
   title: "Prebored pressuremeter test",
   accordingTo: "Conform SR EN ISO 22476-5:2023",
   labFallback: "Laborator",
@@ -196,7 +196,7 @@ const en: Dict = {
   exportCsv: "Export points CSV (audit)",
   printPdf: "Print / PDF A4",
   printHint: (file) =>
-    `File: ${file}.pdf. In the print dialog: uncheck “Headers and footers” so date/time do not appear on the page.`,
+    `File: ${file}.pdf. In the print dialog, uncheck “Headers and footers” — otherwise the file name and URL appear at the top of each page.`,
   title: "Prebored pressuremeter test",
   accordingTo: "According to SR EN ISO 22476-5:2023",
   labFallback: "Laboratory",
