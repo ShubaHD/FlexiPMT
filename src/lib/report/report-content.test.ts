@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   classifyReportGaps,
   dedupeResultsByKey,
+  groupReportResults,
   reportPdfBaseName,
   reportProgrammeModulusResults,
   sortResultsForReport,
@@ -22,7 +23,7 @@ describe("report-content", () => {
     expect(reportPdfBaseName("A/B", null)).toBe("A_B_na_PMT");
   });
 
-  it("sortResultsForReport: GL1 înaintea GUR1–3", () => {
+  it("sortResultsForReport: pe blocuri GL1 (+derivați) apoi GUR…", () => {
     const keys = sortResultsForReport([
       { key: "GUR1" },
       { key: "GUR3" },
@@ -34,13 +35,30 @@ describe("report-content", () => {
     ]).map((r) => r.key);
     expect(keys).toEqual([
       "GL1",
+      "EPBP_GL1",
       "GUR1",
+      "Kr_GUR1",
       "GUR2",
       "GUR3",
       "GU_final",
-      "EPBP_GL1",
-      "Kr_GUR1",
     ]);
+  });
+
+  it("groupReportResults: un bloc per sursă", () => {
+    const groups = groupReportResults([
+      { key: "GUR1" },
+      { key: "GL1" },
+      { key: "EPBP_GL1" },
+      { key: "Kr_GUR1" },
+      { key: "kWinkler_GL1" },
+    ]);
+    expect(groups.map((g) => g.sourceKey)).toEqual(["GL1", "GUR1"]);
+    expect(groups[0].rows.map((r) => r.key)).toEqual([
+      "GL1",
+      "EPBP_GL1",
+      "kWinkler_GL1",
+    ]);
+    expect(groups[1].rows.map((r) => r.key)).toEqual(["GUR1", "Kr_GUR1"]);
   });
 
   it("summarizeCsvNumbers compactează intervale", () => {

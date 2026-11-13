@@ -203,6 +203,17 @@ textarea {
   white-space: nowrap;
 }
 
+.report-table-group td {
+  background: #eef2f6;
+  border-bottom: 1px solid var(--line, #d5dde5);
+  border-top: 1px solid var(--line, #d5dde5);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
 .report-chart .pmt-chart {
   max-height: 105mm;
 }
@@ -332,6 +343,14 @@ textarea {
   .report-table th,
   .report-table td {
     padding: 0.05rem 0.15rem;
+  }
+
+  .report-table-group td {
+    background: #e8eef4 !important;
+    font-size: 7.5pt !important;
+    padding: 0.2rem 0.15rem !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   /* Pagina 1: identificare + program + presiuni + rezultate */

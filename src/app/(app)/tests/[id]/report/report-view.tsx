@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { HistoryEntry, PmtPayloadV1 } from "@/lib/schema/pmt-v1";
 import {
   APP_VERSION,
@@ -14,6 +14,7 @@ import { CHART_AXIS_OPTIONS } from "@/lib/chart/chart-axis";
 import {
   classifyReportGaps,
   formatMPaFromKPa,
+  groupReportResults,
   reportChartAxisMode,
   reportDerivedParameterResults,
   reportPdfBaseName,
@@ -124,6 +125,7 @@ export function ReportView({
     CHART_AXIS_OPTIONS.find((o) => o.value === chartMode)?.label ?? chartMode;
   const moduli = reportProgrammeModulusResults(payload);
   const derived = reportDerivedParameterResults(payload);
+  const resultGroups = groupReportResults([...moduli, ...derived]);
   const formulas = usedFormulas(payload);
   const factorTrace = elastFactorTraceLocalized(
     payload.elastMeta?.factors ?? payload.testFactors ?? null,
@@ -419,7 +421,7 @@ export function ReportView({
               ? ` (${ps.programme})`
               : ""}
           </h2>
-          {moduli.length === 0 && derived.length === 0 ? (
+          {resultGroups.length === 0 ? (
             <p className="text-xs text-muted">{t.noResults}</p>
           ) : (
             <table className="report-table">
@@ -432,22 +434,31 @@ export function ReportView({
                 </tr>
               </thead>
               <tbody>
-                {[...moduli, ...derived].map((r) => (
-                  <tr key={r.key}>
-                    <td>{resultKeyLabelLocalized(r.key, locale)}</td>
-                    <td>
-                      {r.value == null
-                        ? "—"
-                        : Number(r.value).toPrecision(3)}
-                    </td>
-                    <td>{r.unit || "—"}</td>
-                    <td className="text-[0.7rem] text-muted">
-                      {r.formula?.trim() || "—"}
-                      {r.variables ? (
-                        <div className="mt-0.5 print:hidden">{r.variables}</div>
-                      ) : null}
-                    </td>
-                  </tr>
+                {resultGroups.map((group) => (
+                  <Fragment key={group.sourceKey}>
+                    <tr className="report-table-group">
+                      <td colSpan={4}>{group.sourceKey}</td>
+                    </tr>
+                    {group.rows.map((r) => (
+                      <tr key={r.key}>
+                        <td>{resultKeyLabelLocalized(r.key, locale)}</td>
+                        <td>
+                          {r.value == null
+                            ? "—"
+                            : Number(r.value).toPrecision(3)}
+                        </td>
+                        <td>{r.unit || "—"}</td>
+                        <td className="text-[0.7rem] text-muted">
+                          {r.formula?.trim() || "—"}
+                          {r.variables ? (
+                            <div className="mt-0.5 print:hidden">
+                              {r.variables}
+                            </div>
+                          ) : null}
+                        </td>
+                      </tr>
+                    ))}
+                  </Fragment>
                 ))}
               </tbody>
             </table>

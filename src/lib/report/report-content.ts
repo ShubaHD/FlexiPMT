@@ -46,50 +46,91 @@ const MODULUS_KEY =
   /^(GL1|GU_final|GU\d+|GR\d+|GUR\d+|kf)(_exploratory)?$/;
 
 /**
- * Ordine raport: GL1 → GUR1… → GU/GR → GU_final → exploratorii → kf;
- * apoi derivați pe aceeași ordine de bază (Kᵣ, EPBP, E_plane_strain, Kb, M, mv, λ).
+ * Cheia-sursă pentru grupare în raport: GL1, GUR1, GU1, …
+ * (derivații EPBP_GL1 / Kr_GUR1 / kWinkler_GL1 → sursa lor).
+ */
+export function reportSourceKeyForResult(key: string): string {
+  if (key === "kWinkler_GL1") return "GL1";
+  const derived =
+    /^(?:Kr|EPBP|E_plane_strain|Kb|M|mv|lambda)_(.+)$/.exec(key);
+  if (derived) return derived[1];
+  return key;
+}
+
+/**
+ * Ordine raport pe blocuri: GL1 (+ derivați) → GUR1 (+ derivați) → …
+ * În fiecare bloc: modulul GPBP, apoi Kᵣ, EPBP, E_plane_strain, Kb, M, mv, λ, Winkler.
  */
 export function reportResultSortKey(
   key: string
 ): [number, number, number, number] {
+  const kindRank: Record<string, number> = {
+    Kr: 1,
+    EPBP: 2,
+    E_plane_strain: 3,
+    Kb: 4,
+    M: 5,
+    mv: 6,
+    lambda: 7,
+  };
+
   if (key === "kWinkler_GL1") {
-    // După derivații din GL1
-    return [1, 0, 0, 8];
+    const [fam, num] = sourceFamilyRank("GL1");
+    return [fam, num, 8, 0];
   }
   const derived =
     /^(Kr|EPBP|E_plane_strain|Kb|M|mv|lambda)_(.+)$/.exec(key);
   if (derived) {
-    const kindRank: Record<string, number> = {
-      Kr: 0,
-      EPBP: 1,
-      E_plane_strain: 2,
-      Kb: 3,
-      M: 4,
-      mv: 5,
-      lambda: 6,
-    };
     const [, kind, source] = derived;
-    const [, srcFamily, srcNum] = reportResultSortKey(source);
-    return [1, srcFamily, srcNum, kindRank[kind] ?? 9];
+    const [fam, num] = sourceFamilyRank(source);
+    return [fam, num, kindRank[kind] ?? 9, 0];
   }
 
-  if (key === "GL1") return [0, 0, 0, 0];
+  const [fam, num] = sourceFamilyRank(key);
+  return [fam, num, 0, 0];
+}
+
+function sourceFamilyRank(key: string): [number, number] {
+  if (key === "GL1") return [0, 0];
   const gur = /^GUR(\d+)$/.exec(key);
-  if (gur) return [0, 1, Number(gur[1]), 0];
+  if (gur) return [1, Number(gur[1])];
   const gu = /^GU(\d+)$/.exec(key);
-  if (gu) return [0, 2, Number(gu[1]), 0];
+  if (gu) return [2, Number(gu[1])];
   const gr = /^GR(\d+)$/.exec(key);
-  if (gr) return [0, 3, Number(gr[1]), 0];
-  if (key === "GU_final") return [0, 4, 0, 0];
+  if (gr) return [3, Number(gr[1])];
+  if (key === "GU_final") return [4, 0];
   const guExpl = /^GU(\d+)_exploratory$/.exec(key);
-  if (guExpl) return [0, 5, Number(guExpl[1]), 0];
+  if (guExpl) return [5, Number(guExpl[1])];
   const grExpl = /^GR(\d+)_exploratory$/.exec(key);
-  if (grExpl) return [0, 6, Number(grExpl[1]), 0];
+  if (grExpl) return [6, Number(grExpl[1])];
   const cy = /^G_cycle(\d+)_exploratory$/.exec(key);
-  if (cy) return [0, 7, Number(cy[1]), 0];
-  if (key === "G_manual") return [0, 8, 0, 0];
-  if (key === "kf") return [0, 9, 0, 0];
-  return [0, 99, 0, 0];
+  if (cy) return [7, Number(cy[1])];
+  if (key === "G_manual") return [8, 0];
+  if (key === "kf") return [9, 0];
+  return [99, 0];
+}
+
+/** Grupuri tipărite: fiecare sursă (GL1, GUR1, …) cu modulul + derivații lui. */
+export type ReportResultGroup<T extends { key: string } = ComputedResult> = {
+  sourceKey: string;
+  rows: T[];
+};
+
+export function groupReportResults<T extends { key: string }>(
+  rows: T[]
+): ReportResultGroup<T>[] {
+  const sorted = sortResultsForReport(rows);
+  const groups: ReportResultGroup<T>[] = [];
+  for (const row of sorted) {
+    const sourceKey = reportSourceKeyForResult(row.key);
+    const last = groups[groups.length - 1];
+    if (last && last.sourceKey === sourceKey) {
+      last.rows.push(row);
+    } else {
+      groups.push({ sourceKey, rows: [row] });
+    }
+  }
+  return groups;
 }
 
 export function sortResultsForReport<T extends { key: string }>(
