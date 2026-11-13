@@ -543,12 +543,18 @@ export function runProgrammeCalculations(
         warnings.push("kf: lipsesc Pass time sau dRi pe punctele selectate.");
         continue;
       }
-      const dt = t1 - t0;
+      // ISO Formula (7): t1, t2 = timp absolut pe menținere (min), cu t2 > t1 > 0
+      if (!(t0 > 0 && t1 > t0)) {
+        warnings.push(
+          `kf: Pass time invalid pentru Formula (7) (t1=${t0}, t2=${t1} min) — necesită t2>t1>0.`
+        );
+        continue;
+      }
       const use = computeKf({
         delta1Mm: d0,
         delta2Mm: d1,
-        t1Min: 0.01,
-        t2Min: Math.max(0.02, dt > 0 ? dt : 0.02),
+        t1Min: t0,
+        t2Min: t1,
       });
       results.push({
         key: "kf",

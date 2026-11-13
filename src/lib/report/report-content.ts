@@ -114,6 +114,46 @@ export function programmeModulusResults(
   );
 }
 
+/**
+ * Module pentru tipărire client (ISO §6.4 + clauza 7):
+ * - o singură apariție per cheie
+ * - fără *_exploratory / G_cycle* (nu sunt rezultate de tabel A/B)
+ * - pe program B: doar GL1 / GURi / GU_final / kf (nu GU/GR de tip A)
+ * - pe program A: doar GL1 / GUi / GRi (nu GURi)
+ */
+export function reportProgrammeModulusResults(
+  payload: PmtPayloadV1
+): ComputedResult[] {
+  const prog =
+    payload.programmeState?.programme ??
+    payload.interpretation?.programme ??
+    "none";
+  const raw = programmeModulusResults(payload.results ?? []).filter((r) => {
+    if (/_exploratory$/.test(r.key)) return false;
+    if (/^G_cycle\d+_exploratory$/.test(r.key)) return false;
+    if (prog === "B") {
+      if (/^GU\d+$/.test(r.key) || /^GR\d+$/.test(r.key)) return false;
+    }
+    if (prog === "A") {
+      if (/^GUR\d+$/.test(r.key)) return false;
+    }
+    return true;
+  });
+  return dedupeResultsByKey(raw);
+}
+
+/** Păstrează prima apariție per `key` (evită dubluri în tabelul de raport). */
+export function dedupeResultsByKey<T extends { key: string }>(rows: T[]): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const r of rows) {
+    if (seen.has(r.key)) continue;
+    seen.add(r.key);
+    out.push(r);
+  }
+  return out;
+}
+
 /** Parametri derivați (Kᵣ, EPBP, Kb, E_plane_strain, M, mv, λ, k_Winkler). */
 export function derivedParameterResults(
   results: ComputedResult[]
@@ -139,12 +179,24 @@ export function reportDerivedParameterResults(
   };
   if (!ri.includeDerivedInReport) return [];
   const allowed = new Set(ri.derivedSourceKeys ?? []);
-  return sortResultsForReport(
-    derivedParameterResults(payload.results ?? []).filter((r) => {
-      if (r.key === "kWinkler_GL1") return true;
-      const m = /^(?:Kr|EPBP|Kb|E_plane_strain|M|mv|lambda)_(.+)$/.exec(r.key);
-      return m != null && (allowed.size === 0 || allowed.has(m[1]));
-    })
+  const moduliKeys = new Set(
+    reportProgrammeModulusResults(payload).map((r) => r.key)
+  );
+  return dedupeResultsByKey(
+    sortResultsForReport(
+      derivedParameterResults(payload.results ?? []).filter((r) => {
+        if (r.key === "kWinkler_GL1") {
+          return ri.computeKWinkler === true && moduliKeys.has("GL1");
+        }
+        const m = /^(?:Kr|EPBP|Kb|E_plane_strain|M|mv|lambda)_(.+)$/.exec(
+          r.key
+        );
+        if (m == null) return false;
+        // Doar derivați din modulele tipărite (aceeași bază, fără exploratorii)
+        if (!moduliKeys.has(m[1])) return false;
+        return allowed.size === 0 || allowed.has(m[1]);
+      })
+    )
   );
 }
 

@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   classifyReportGaps,
+  dedupeResultsByKey,
   reportPdfBaseName,
+  reportProgrammeModulusResults,
   sortResultsForReport,
   summarizeCsvNumbers,
   usedFormulas,
@@ -103,6 +105,108 @@ describe("report-content", () => {
     expect(
       optional.some((g) => g.message.includes("Parametri derivați"))
     ).toBe(true);
+  });
+
+  it("raport B: fără exploratorii GU/GR și fără chei duplicate", () => {
+    const payload = emptyPayload();
+    payload.programmeState = {
+      ...defaultProgrammeState(),
+      programme: "B",
+      programmeConfirmed: true,
+    };
+    payload.results = [
+      {
+        key: "GL1",
+        label: "GL1",
+        value: 10,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GUR1",
+        label: "GUR1",
+        value: 12,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GU1_exploratory",
+        label: "GU1 expl",
+        value: 11,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GR1_exploratory",
+        label: "GR1 expl",
+        value: 11.5,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GUR1",
+        label: "GUR1 dup",
+        value: 99,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GU1",
+        label: "GU1 leak",
+        value: 8,
+        unit: "MPa",
+        origin: "calculated",
+      },
+    ];
+    const keys = reportProgrammeModulusResults(payload).map((r) => r.key);
+    expect(keys).toEqual(["GL1", "GUR1"]);
+    expect(dedupeResultsByKey(payload.results).filter((r) => r.key === "GUR1")).toHaveLength(
+      1
+    );
+  });
+
+  it("raport A: fără GURi", () => {
+    const payload = emptyPayload();
+    payload.programmeState = {
+      ...defaultProgrammeState(),
+      programme: "A",
+      programmeConfirmed: true,
+    };
+    payload.results = [
+      {
+        key: "GL1",
+        label: "GL1",
+        value: 1,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GU1",
+        label: "GU1",
+        value: 2,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GR1",
+        label: "GR1",
+        value: 3,
+        unit: "MPa",
+        origin: "calculated",
+      },
+      {
+        key: "GUR1",
+        label: "GUR1",
+        value: 4,
+        unit: "MPa",
+        origin: "calculated",
+      },
+    ];
+    expect(reportProgrammeModulusResults(payload).map((r) => r.key)).toEqual([
+      "GL1",
+      "GU1",
+      "GR1",
+    ]);
   });
 
   it("usedFormulas nu include previzualizări", () => {

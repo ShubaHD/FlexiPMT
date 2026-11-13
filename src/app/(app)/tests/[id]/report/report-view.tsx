@@ -14,10 +14,10 @@ import { CHART_AXIS_OPTIONS } from "@/lib/chart/chart-axis";
 import {
   classifyReportGaps,
   formatMPaFromKPa,
-  programmeModulusResults,
   reportChartAxisMode,
   reportDerivedParameterResults,
   reportPdfBaseName,
+  reportProgrammeModulusResults,
   usedFormulas,
 } from "@/lib/report/report-content";
 import {
@@ -122,7 +122,7 @@ export function ReportView({
   const chartMode = reportChartAxisMode(payload);
   const chartLabel =
     CHART_AXIS_OPTIONS.find((o) => o.value === chartMode)?.label ?? chartMode;
-  const moduli = programmeModulusResults(payload.results ?? []);
+  const moduli = reportProgrammeModulusResults(payload);
   const derived = reportDerivedParameterResults(payload);
   const formulas = usedFormulas(payload);
   const factorTrace = elastFactorTraceLocalized(
