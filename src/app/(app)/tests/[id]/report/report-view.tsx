@@ -26,6 +26,7 @@ import {
   loadReportLocale,
   REPORT_LOCALES,
   reportT,
+  resultKeyLabelInGroup,
   resultKeyLabelLocalized,
   saveReportLocale,
   translateGapMessage,
@@ -296,6 +297,7 @@ export function ReportView({
         className="report-a4 card mx-auto space-y-3 print:space-y-1.5 print:border-0 print:shadow-none print:p-0"
         lang={locale === "en" ? "en" : "ro"}
       >
+        <div className="report-page-1">
         {reportHeader}
 
         {(missing.length > 0 || optionalGaps.length > 0) && (
@@ -441,14 +443,14 @@ export function ReportView({
                     </tr>
                     {group.rows.map((r) => (
                       <tr key={r.key}>
-                        <td>{resultKeyLabelLocalized(r.key, locale)}</td>
+                        <td>{resultKeyLabelInGroup(r.key, locale)}</td>
                         <td>
                           {r.value == null
                             ? "—"
                             : Number(r.value).toPrecision(3)}
                         </td>
                         <td>{r.unit || "—"}</td>
-                        <td className="text-[0.7rem] text-muted">
+                        <td className="report-formula-cell text-[0.7rem] text-muted">
                           {r.formula?.trim() || "—"}
                           {r.variables ? (
                             <div className="mt-0.5 print:hidden">
@@ -464,12 +466,15 @@ export function ReportView({
             </table>
           )}
           {usesFormula5Note(payload) && (
-            <p className="mt-2 text-[0.7rem] text-muted">{t.formula5Note}</p>
+            <p className="mt-1 text-[0.7rem] text-muted print:mt-0.5">
+              {t.formula5Note}
+            </p>
           )}
         </section>
+        </div>
 
         <div className="report-page-2">
-          <div className="report-header-page2 hidden print:block">
+          <div className="report-header-page2 report-print-only">
             {reportHeader}
           </div>
 
@@ -488,7 +493,7 @@ export function ReportView({
                 onSelect={() => {}}
                 psKPa={interp.psKPa}
                 apparatusLimitKPa={interp.apparatusLimitKPa}
-                heightPx={220}
+                heightPx={190}
                 readOnly
                 locale={locale}
                 chartAxisMode={chartMode}

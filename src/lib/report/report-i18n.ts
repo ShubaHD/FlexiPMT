@@ -327,6 +327,67 @@ export function resultKeyLabelLocalized(
   return resultKeyLabelEn(key);
 }
 
+/**
+ * Etichetă scurtă în tabelul de raport (grupat pe GL1/GUR…):
+ * fără repetarea sursei — antetul de grup o arată deja.
+ */
+export function resultKeyLabelInGroup(
+  key: string,
+  locale: ReportLocale
+): string {
+  if (key === "kWinkler_GL1") {
+    return locale === "en" ? "k_Winkler" : "k_Winkler (estimare)";
+  }
+  const derived = /^(Kr|EPBP|E_plane_strain|Kb|M|mv|lambda)_(.+)$/.exec(key);
+  if (derived) {
+    const kind = derived[1];
+    if (locale === "en") {
+      const en: Record<string, string> = {
+        Kr: "Kᵣ — radial stiffness",
+        EPBP: "EPBP — Young’s modulus",
+        E_plane_strain: "E_plane_strain",
+        Kb: "Kb — bulk modulus",
+        M: "M — constrained modulus",
+        mv: "mv — 1/M",
+        lambda: "λ — Lamé",
+      };
+      return en[kind] ?? kind;
+    }
+    const ro: Record<string, string> = {
+      Kr: "Kᵣ — rigiditate radială",
+      EPBP: "EPBP — modul Young",
+      E_plane_strain: "E_plane_strain",
+      Kb: "Kb — modul volumic",
+      M: "M — modul constrâns",
+      mv: "mv — 1/M",
+      lambda: "λ — Lamé",
+    };
+    return ro[kind] ?? kind;
+  }
+  // Module GPBP: formă scurtă (grupul are deja GL1 / GUR1)
+  if (key === "GL1") {
+    return locale === "en"
+      ? "GPBP — first loading"
+      : "GPBP — prima încărcare";
+  }
+  if (key === "GU_final") {
+    return locale === "en" ? "GPBP — final unload" : "GPBP — descărcare finală";
+  }
+  if (key === "kf") return "kf";
+  if (/^GUR\d+$/.test(key)) {
+    return locale === "en"
+      ? "GPBP — unload–reload loop"
+      : "GPBP — buclă descărcare–reîncărcare";
+  }
+  if (/^GU\d+$/.test(key)) {
+    return locale === "en" ? "GPBP — unloading" : "GPBP — descărcare";
+  }
+  if (/^GR\d+$/.test(key)) {
+    return locale === "en" ? "GPBP — reloading" : "GPBP — reîncărcare";
+  }
+  return resultKeyLabelLocalized(key, locale);
+}
+
 function resultKeyLabelRo(key: string): string {
   if (key === "GL1")
     return "GL1 — modul de forfecare pe prima încărcare (GPBP)";

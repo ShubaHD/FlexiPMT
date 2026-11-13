@@ -237,6 +237,10 @@ textarea {
   margin-top: 0.5rem;
 }
 
+.report-print-only {
+  display: none;
+}
+
 @media print {
   /*
    * Margini proprii pe pagină — fără spațiu pentru antetul/subsolul browserului.
@@ -245,7 +249,7 @@ textarea {
    */
   @page {
     size: A4 portrait;
-    margin: 12mm 10mm 12mm 10mm;
+    margin: 10mm 9mm 11mm 9mm;
 
     @top-left {
       content: none;
@@ -273,6 +277,10 @@ textarea {
     display: none !important;
   }
 
+  .report-print-only {
+    display: block !important;
+  }
+
   body {
     background: white !important;
     -webkit-print-color-adjust: exact;
@@ -298,28 +306,36 @@ textarea {
   }
 
   .report-a4 h1 {
-    font-size: 12pt !important;
-    margin-top: 0.1rem !important;
+    font-size: 11pt !important;
+    margin-top: 0 !important;
     margin-bottom: 0 !important;
+    line-height: 1.15 !important;
   }
 
   .report-a4 h2 {
-    font-size: 9pt !important;
-    margin-bottom: 0.1rem !important;
+    font-size: 8.5pt !important;
+    margin-bottom: 0.08rem !important;
+    margin-top: 0.2rem !important;
   }
 
   .report-doc-header {
-    padding-bottom: 1.5mm !important;
-    margin-bottom: 1mm;
+    padding-bottom: 1mm !important;
+    margin-bottom: 0.5mm;
+  }
+
+  .report-doc-header .text-xs,
+  .report-doc-header .text-\[0\.7rem\] {
+    font-size: 7pt !important;
+    line-height: 1.2 !important;
   }
 
   .report-doc-header .text-sm {
-    font-size: 8pt !important;
+    font-size: 7.5pt !important;
+    line-height: 1.2 !important;
   }
 
   .report-header-page2 {
-    display: block !important;
-    margin-bottom: 2mm;
+    margin-bottom: 1.5mm;
   }
 
   .report-header-page2 .report-doc-header {
@@ -327,69 +343,101 @@ textarea {
   }
 
   .report-dl {
-    grid-template-columns: 9.5rem 1fr;
-    gap: 0.04rem 0.4rem;
-    font-size: 7.5pt;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.02rem 0.35rem;
+    font-size: 7pt;
+    line-height: 1.2;
   }
 
   .report-a4[lang="en"] .report-dl {
-    grid-template-columns: 10.5rem 1fr;
+    grid-template-columns: 9.5rem 1fr;
   }
 
   .report-table {
-    font-size: 6.5pt;
+    font-size: 6pt;
+    line-height: 1.15;
+  }
+
+  .report-table thead {
+    /* Nu repeta antetul tabelului pe pagina de continuare (evită „pagina 2 goală”) */
+    display: table-row-group;
   }
 
   .report-table th,
   .report-table td {
-    padding: 0.05rem 0.15rem;
+    padding: 0.02rem 0.12rem;
+    vertical-align: middle;
+  }
+
+  .report-formula-cell {
+    font-size: 5.5pt !important;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 48mm;
+    text-overflow: ellipsis;
   }
 
   .report-table-group td {
     background: #e8eef4 !important;
-    font-size: 7.5pt !important;
-    padding: 0.2rem 0.15rem !important;
+    font-size: 6.5pt !important;
+    padding: 0.12rem 0.12rem !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
 
-  /* Pagina 1: identificare + program + presiuni + rezultate */
   .report-block {
     break-inside: auto;
   }
 
-  /* Pagina 2: antet + grafic + calibrări + semnături */
+  /*
+   * Exact 2 pagini A4 (un singur break — avoid pagină goală):
+   * p.1 = identificare + program + presiuni + rezultate
+   * p.2 = antet laborator + grafic + calibrări + semnături
+   */
+  .report-page-1 {
+    break-after: page;
+    page-break-after: always;
+  }
+
   .report-page-2 {
-    break-before: page;
-    page-break-before: always;
+    break-before: avoid;
+    page-break-before: avoid;
   }
 
   .report-chart {
     break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 1.5mm;
+    margin-bottom: 1mm;
   }
 
   .report-chart .pmt-chart {
-    max-height: 95mm;
+    max-height: 78mm !important;
+    height: 78mm !important;
   }
 
   .report-logo {
-    max-height: 9mm !important;
+    max-height: 8mm !important;
   }
 
   .report-signatures {
     break-inside: avoid;
-    margin-top: 1.5mm;
+    margin-top: 1mm;
+  }
+
+  .report-signatures .mt-7,
+  .report-signatures .print\:mt-5 {
+    margin-top: 3mm !important;
+    min-height: 1.1rem !important;
   }
 
   .report-doc-footer {
     break-inside: avoid;
-    margin-top: 1mm;
+    margin-top: 0.5mm;
+    font-size: 6.5pt !important;
   }
 
   .report-page-2 .report-block p {
-    font-size: 7pt;
+    font-size: 6.5pt;
     line-height: 1.2;
   }
 }
